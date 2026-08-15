@@ -9,7 +9,7 @@ def _():
     import marimo as mo
     import yfinance as yf
     import polars as pl
-    from datetime import datetime, date, timedelta, timezone
+    from datetime import date, timedelta
     from dateutil.relativedelta import relativedelta
 
     return date, mo, pl, relativedelta, timedelta, yf
@@ -24,15 +24,14 @@ def _(yf):
 @app.cell
 def _(pl):
     def dt_conv(df, date):
-
         df = df.with_columns(
             pl.col(date)
-                .dt.convert_time_zone("America/New_York")
-                .dt.replace_time_zone(None)
+            .dt.convert_time_zone("America/New_York")
+            .dt.replace_time_zone(None)
         )
 
-        if date == 'Datetime':
-            df = df.rename({'Datetime': 'Date'})
+        if date == "Datetime":
+            df = df.rename({"Datetime": "Date"})
 
         return df
 
@@ -44,36 +43,29 @@ def _(aapl, date, dt_conv, pl, relativedelta, timedelta):
     end = date.today() - timedelta(days=59)
     start = end - relativedelta(years=5)
 
-    aapl_df_day = pl.DataFrame(aapl.history(
-        start=start,
-        end=end, 
-        interval="1d").reset_index())
+    aapl_df_day = pl.DataFrame(
+        aapl.history(start=start, end=end, interval="1d").reset_index()
+    )
 
-    last_5m = aapl_df_day['Date'].max() + relativedelta(days=1)
+    last_5m = aapl_df_day["Date"].max() + relativedelta(days=1)
     end_5m = last_5m + relativedelta(days=52)
 
-    aapl_df_5m = pl.DataFrame(aapl.history(
-        start = last_5m,
-        end = end_5m,
-        interval="5m").reset_index())
+    aapl_df_5m = pl.DataFrame(
+        aapl.history(start=last_5m, end=end_5m, interval="5m").reset_index()
+    )
 
-    last_1m = aapl_df_5m['Datetime'].max()+timedelta(hours=1)
+    last_1m = aapl_df_5m["Datetime"].max() + timedelta(hours=1)
     end_1m = last_1m + timedelta(days=7)
 
-    aapl_df_1m = pl.DataFrame(aapl.history(
-        start = last_1m,
-        end=end_1m,
-        interval="1m").reset_index())
+    aapl_df_1m = pl.DataFrame(
+        aapl.history(start=last_1m, end=end_1m, interval="1m").reset_index()
+    )
 
-    tables = [
-        (aapl_df_day, 'Date'),
-        (aapl_df_5m, 'Datetime'),
-        (aapl_df_1m, 'Datetime')
-    ]
+    tables = [(aapl_df_day, "Date"), (aapl_df_5m, "Datetime"), (aapl_df_1m, "Datetime")]
 
     tables_cln = []
     for t, c in tables:
-        _t = dt_conv(t,c)
+        _t = dt_conv(t, c)
         tables_cln.append(_t)
 
     aapl_df_all = pl.concat(tables_cln)
@@ -89,7 +81,7 @@ def _(aapl_df_all):
 @app.cell
 def _(mo):
     _df = mo.sql(
-        f"""
+        """
         -- SELECT * 
         -- FROM aapl_df_1m_cln
         -- WHERE Datetime >= TIMESTAMP '2026-08-13 00:00:00' AND

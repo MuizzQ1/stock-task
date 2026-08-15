@@ -8,3 +8,6 @@ wheels/
 
 # Virtual environments
 .venv
+
+# Pre commit
+.pre-commit-config.yaml
