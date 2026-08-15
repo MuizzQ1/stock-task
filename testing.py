@@ -6,10 +6,11 @@ app = marimo.App(width="medium")
 
 @app.cell
 def _():
-    import marimo as mo
-    import yfinance as yf
-    import polars as pl
     from datetime import date, timedelta
+
+    import marimo as mo
+    import polars as pl
+    import yfinance as yf
     from dateutil.relativedelta import relativedelta
 
     return date, mo, pl, relativedelta, timedelta, yf
@@ -75,7 +76,6 @@ def _(aapl, date, dt_conv, pl, relativedelta, timedelta):
 @app.cell
 def _(aapl_df_all):
     aapl_df_all
-    return
 
 
 @app.cell
@@ -89,7 +89,6 @@ def _(mo):
         -- ORDER BY Datetime ASC
         """
     )
-    return
 
 
 @app.cell(hide_code=True)
@@ -105,7 +104,6 @@ def _(mo):
     - Dividend/split adjustment, error rates with opening & closing times, api data is only up until day before
     - Connectivity security
     """)
-    return
 
 
 @app.cell(hide_code=True)
@@ -113,7 +111,6 @@ def _(mo):
     mo.md(r"""
     # Test Py Script
     """)
-    return
 
 
 @app.cell
@@ -132,7 +129,6 @@ def _(StockIngestion):
 @app.cell
 def _(st):
     st.stock_data_refresh()
-    return
 
 
 if __name__ == "__main__":

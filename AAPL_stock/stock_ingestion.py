@@ -1,7 +1,10 @@
+from datetime import datetime, timedelta
+from zoneinfo import ZoneInfo
+
 import polars as pl
 import yfinance as yf
-from datetime import date, timedelta
 from dateutil.relativedelta import relativedelta
+
 from .helper import dt_conv
 
 
@@ -33,7 +36,7 @@ class StockIngestion:
         """
 
         # Define the date range for the last 5 years
-        end = date.today() - timedelta(days=59)
+        end = datetime.now(ZoneInfo("America/New_York")).date() - timedelta(days=59)
         start = end - relativedelta(years=5)
 
         aapl_df_day = pl.DataFrame(
