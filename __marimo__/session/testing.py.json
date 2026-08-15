@@ -1,0 +1,152 @@
+{
+  "version": "1",
+  "metadata": {
+    "marimo_version": "0.23.16",
+    "script_metadata_hash": null
+  },
+  "cells": [
+    {
+      "id": "Hbol",
+      "code_hash": "ecf6a89e84a02c7fd749acb165aab2c5",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "MJUe",
+      "code_hash": "715c9c990e97603aa13f1fdcc8c26dda",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "vblA",
+      "code_hash": "4eb50c8cf193861334b6703e9114decd",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "bkHC",
+      "code_hash": "0cf0b269c57d3d2993b04ecaada7364f",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "lEQa",
+      "code_hash": "da538686f13e36cdcc3909d8f4c9e361",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='lEQa-0' random-id='b8570df6-8128-1cff-04ad-0427ae29d9a4'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;Date&#92;&quot;:&#92;&quot;2021-06-17 00:00:00&#92;&quot;,&#92;&quot;Open&#92;&quot;:126.41374704429569,&#92;&quot;High&#92;&quot;:129.09200433395995,&#92;&quot;Low&#92;&quot;:126.26765136661298,&#92;&quot;Close&#92;&quot;:128.35182189941406,&#92;&quot;Volume&#92;&quot;:96721700,&#92;&quot;Dividends&#92;&quot;:0.0,&#92;&quot;Stock Splits&#92;&quot;:0.0},{&#92;&quot;Date&#92;&quot;:&#92;&quot;2021-06-18 00:00:00&#92;&quot;,&#92;&quot;Open&#92;&quot;:127.30002703971456,&#92;&quot;High&#92;&quot;:128.0791446469785,&#92;&quot;Low&#92;&quot;:126.84228727205331,&#92;&quot;Close&#92;&quot;:127.05654907226562,&#92;&quot;Volume&#92;&quot;:108953300,&#92;&quot;Dividends&#92;&quot;:0.0,&#92;&quot;Stock Splits&#92;&quot;:0.0},{&#92;&quot;Date&#92;&quot;:&#92;&quot;2021-06-21 00:00:00&#92;&quot;,&#92;&quot;Open&#92;&quot;:126.90074760795298,&#92;&quot;High&#92;&quot;:128.955702701089,&#92;&quot;Low&#92;&quot;:125.83918700220758,&#92;&quot;Close&#92;&quot;:128.84857177734375,&#92;&quot;Volume&#92;&quot;:79663300,&#92;&quot;Dividends&#92;&quot;:0.0,&#92;&quot;Stock Splits&#92;&quot;:0.0},{&#92;&quot;Date&#92;&quot;:&#92;&quot;2021-06-22 00:00:00&#92;&quot;,&#92;&quot;Open&#92;&quot;:128.6830127117991,&#92;&quot;High&#92;&quot;:130.58213836687776,&#92;&quot;Low&#92;&quot;:128.18630802151114,&#92;&quot;Close&#92;&quot;:130.4847412109375,&#92;&quot;Volume&#92;&quot;:74783600,&#92;&quot;Dividends&#92;&quot;:0.0,&#92;&quot;Stock Splits&#92;&quot;:0.0},{&#92;&quot;Date&#92;&quot;:&#92;&quot;2021-06-23 00:00:00&#92;&quot;,&#92;&quot;Open&#92;&quot;:130.2802476419782,&#92;&quot;High&#92;&quot;:130.81590235901706,&#92;&quot;Low&#92;&quot;:129.75432669771394,&#92;&quot;Close&#92;&quot;:130.21206665039062,&#92;&quot;Volume&#92;&quot;:60214200,&#92;&quot;Dividends&#92;&quot;:0.0,&#92;&quot;Stock Splits&#92;&quot;:0.0},{&#92;&quot;Date&#92;&quot;:&#92;&quot;2021-06-24 00:00:00&#92;&quot;,&#92;&quot;Open&#92;&quot;:130.94241169656203,&#92;&quot;High&#92;&quot;:131.12745727834474,&#92;&quot;Low&#92;&quot;:129.46206190301214,&#92;&quot;Close&#92;&quot;:129.92955017089844,&#92;&quot;Volume&#92;&quot;:68711000,&#92;&quot;Dividends&#92;&quot;:0.0,&#92;&quot;Stock Splits&#92;&quot;:0.0},{&#92;&quot;Date&#92;&quot;:&#92;&quot;2021-06-25 00:00:00&#92;&quot;,&#92;&quot;Open&#92;&quot;:129.978280483212,&#92;&quot;High&#92;&quot;:130.3970554405537,&#92;&quot;Low&#92;&quot;:129.34522887186355,&#92;&quot;Close&#92;&quot;:129.6374053955078,&#92;&quot;Volume&#92;&quot;:70783700,&#92;&quot;Dividends&#92;&quot;:0.0,&#92;&quot;Stock Splits&#92;&quot;:0.0},{&#92;&quot;Date&#92;&quot;:&#92;&quot;2021-06-28 00:00:00&#92;&quot;,&#92;&quot;Open&#92;&quot;:129.9295701209538,&#92;&quot;High&#92;&quot;:131.72156417420152,&#92;&quot;Low&#92;&quot;:129.8711377936739,&#92;&quot;Close&#92;&quot;:131.26382446289062,&#92;&quot;Volume&#92;&quot;:62111300,&#92;&quot;Dividends&#92;&quot;:0.0,&#92;&quot;Stock Splits&#92;&quot;:0.0},{&#92;&quot;Date&#92;&quot;:&#92;&quot;2021-06-29 00:00:00&#92;&quot;,&#92;&quot;Open&#92;&quot;:131.28332301060522,&#92;&quot;High&#92;&quot;:132.9292364481491,&#92;&quot;Low&#92;&quot;:130.84506564137368,&#92;&quot;Close&#92;&quot;:132.77340698242188,&#92;&quot;Volume&#92;&quot;:64556100,&#92;&quot;Dividends&#92;&quot;:0.0,&#92;&quot;Stock Splits&#92;&quot;:0.0},{&#92;&quot;Date&#92;&quot;:&#92;&quot;2021-06-30 00:00:00&#92;&quot;,&#92;&quot;Open&#92;&quot;:132.61757943917965,&#92;&quot;High&#92;&quot;:133.82523552499876,&#92;&quot;Low&#92;&quot;:132.32540290188453,&#92;&quot;Close&#92;&quot;:133.38697814941406,&#92;&quot;Volume&#92;&quot;:63261400,&#92;&quot;Dividends&#92;&quot;:0.0,&#92;&quot;Stock Splits&#92;&quot;:0.0}]&quot;' data-total-rows='6013' data-total-columns='8' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='true' data-page-size='10' data-field-types='[[&quot;Date&quot;,[&quot;datetime&quot;,&quot;datetime[ms]&quot;]],[&quot;Open&quot;,[&quot;number&quot;,&quot;f64&quot;]],[&quot;High&quot;,[&quot;number&quot;,&quot;f64&quot;]],[&quot;Low&quot;,[&quot;number&quot;,&quot;f64&quot;]],[&quot;Close&quot;,[&quot;number&quot;,&quot;f64&quot;]],[&quot;Volume&quot;,[&quot;integer&quot;,&quot;i64&quot;]],[&quot;Dividends&quot;,[&quot;number&quot;,&quot;f64&quot;]],[&quot;Stock Splits&quot;,[&quot;number&quot;,&quot;f64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-search='true' data-show-column-summaries='true' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "PKri",
+      "code_hash": "864b54eee94ec28f299e6a4da61b7588",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Xref",
+      "code_hash": "31caa2cd7a4e2657db164d97782769b9",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"todo\">TODO:</h1>\n<ul>\n<li>Extract data sequentially using current datetime</li>\n<li>Package into a rerun python class/method</li>\n<li>Remove overlapping data (should be solved by sequential step)</li>\n</ul>\n<h1 id=\"good-to-share\">Good to share:</h1>\n<ul>\n<li>Dividend/split adjustment, error rates with opening &amp; closing times, api data is only up until day before</li>\n<li>Connectivity security</li>\n</ul></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "SFPL",
+      "code_hash": "b19f19a68248e86fec7e8ec11caf8198",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/markdown": "<span class=\"markdown prose dark:prose-invert contents\"><h1 id=\"test-py-script\">Test Py Script</h1></span>"
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "BYtC",
+      "code_hash": "f7f80ef71b39021b6ef76ce0fd77da13",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "RGSE",
+      "code_hash": "7a3dbe5995b7ba4d78860f8a4834ad82",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/plain": ""
+          }
+        }
+      ],
+      "console": []
+    },
+    {
+      "id": "Pdun",
+      "code_hash": "1772a7a586f72c5614ed7d2a9c6a0595",
+      "outputs": [
+        {
+          "type": "data",
+          "data": {
+            "text/html": "<marimo-ui-element object-id='Pdun-0' random-id='24b52a2e-a136-c7bf-5439-9459465364b8'><marimo-table data-initial-value='[]' data-label='null' data-data='&quot;[{&#92;&quot;Date&#92;&quot;:&#92;&quot;2021-06-17 00:00:00&#92;&quot;,&#92;&quot;Open&#92;&quot;:126.41374704429569,&#92;&quot;High&#92;&quot;:129.09200433395995,&#92;&quot;Low&#92;&quot;:126.26765136661298,&#92;&quot;Close&#92;&quot;:128.35182189941406,&#92;&quot;Volume&#92;&quot;:96721700,&#92;&quot;Dividends&#92;&quot;:0.0,&#92;&quot;Stock Splits&#92;&quot;:0.0},{&#92;&quot;Date&#92;&quot;:&#92;&quot;2021-06-18 00:00:00&#92;&quot;,&#92;&quot;Open&#92;&quot;:127.30002703971456,&#92;&quot;High&#92;&quot;:128.0791446469785,&#92;&quot;Low&#92;&quot;:126.84228727205331,&#92;&quot;Close&#92;&quot;:127.05654907226562,&#92;&quot;Volume&#92;&quot;:108953300,&#92;&quot;Dividends&#92;&quot;:0.0,&#92;&quot;Stock Splits&#92;&quot;:0.0},{&#92;&quot;Date&#92;&quot;:&#92;&quot;2021-06-21 00:00:00&#92;&quot;,&#92;&quot;Open&#92;&quot;:126.90074760795298,&#92;&quot;High&#92;&quot;:128.955702701089,&#92;&quot;Low&#92;&quot;:125.83918700220758,&#92;&quot;Close&#92;&quot;:128.84857177734375,&#92;&quot;Volume&#92;&quot;:79663300,&#92;&quot;Dividends&#92;&quot;:0.0,&#92;&quot;Stock Splits&#92;&quot;:0.0},{&#92;&quot;Date&#92;&quot;:&#92;&quot;2021-06-22 00:00:00&#92;&quot;,&#92;&quot;Open&#92;&quot;:128.6830127117991,&#92;&quot;High&#92;&quot;:130.58213836687776,&#92;&quot;Low&#92;&quot;:128.18630802151114,&#92;&quot;Close&#92;&quot;:130.4847412109375,&#92;&quot;Volume&#92;&quot;:74783600,&#92;&quot;Dividends&#92;&quot;:0.0,&#92;&quot;Stock Splits&#92;&quot;:0.0},{&#92;&quot;Date&#92;&quot;:&#92;&quot;2021-06-23 00:00:00&#92;&quot;,&#92;&quot;Open&#92;&quot;:130.2802476419782,&#92;&quot;High&#92;&quot;:130.81590235901706,&#92;&quot;Low&#92;&quot;:129.75432669771394,&#92;&quot;Close&#92;&quot;:130.21206665039062,&#92;&quot;Volume&#92;&quot;:60214200,&#92;&quot;Dividends&#92;&quot;:0.0,&#92;&quot;Stock Splits&#92;&quot;:0.0},{&#92;&quot;Date&#92;&quot;:&#92;&quot;2021-06-24 00:00:00&#92;&quot;,&#92;&quot;Open&#92;&quot;:130.94241169656203,&#92;&quot;High&#92;&quot;:131.12745727834474,&#92;&quot;Low&#92;&quot;:129.46206190301214,&#92;&quot;Close&#92;&quot;:129.92955017089844,&#92;&quot;Volume&#92;&quot;:68711000,&#92;&quot;Dividends&#92;&quot;:0.0,&#92;&quot;Stock Splits&#92;&quot;:0.0},{&#92;&quot;Date&#92;&quot;:&#92;&quot;2021-06-25 00:00:00&#92;&quot;,&#92;&quot;Open&#92;&quot;:129.978280483212,&#92;&quot;High&#92;&quot;:130.3970554405537,&#92;&quot;Low&#92;&quot;:129.34522887186355,&#92;&quot;Close&#92;&quot;:129.6374053955078,&#92;&quot;Volume&#92;&quot;:70783700,&#92;&quot;Dividends&#92;&quot;:0.0,&#92;&quot;Stock Splits&#92;&quot;:0.0},{&#92;&quot;Date&#92;&quot;:&#92;&quot;2021-06-28 00:00:00&#92;&quot;,&#92;&quot;Open&#92;&quot;:129.9295701209538,&#92;&quot;High&#92;&quot;:131.72156417420152,&#92;&quot;Low&#92;&quot;:129.8711377936739,&#92;&quot;Close&#92;&quot;:131.26382446289062,&#92;&quot;Volume&#92;&quot;:62111300,&#92;&quot;Dividends&#92;&quot;:0.0,&#92;&quot;Stock Splits&#92;&quot;:0.0},{&#92;&quot;Date&#92;&quot;:&#92;&quot;2021-06-29 00:00:00&#92;&quot;,&#92;&quot;Open&#92;&quot;:131.28332301060522,&#92;&quot;High&#92;&quot;:132.9292364481491,&#92;&quot;Low&#92;&quot;:130.84506564137368,&#92;&quot;Close&#92;&quot;:132.77340698242188,&#92;&quot;Volume&#92;&quot;:64556100,&#92;&quot;Dividends&#92;&quot;:0.0,&#92;&quot;Stock Splits&#92;&quot;:0.0},{&#92;&quot;Date&#92;&quot;:&#92;&quot;2021-06-30 00:00:00&#92;&quot;,&#92;&quot;Open&#92;&quot;:132.61757943917965,&#92;&quot;High&#92;&quot;:133.82523552499876,&#92;&quot;Low&#92;&quot;:132.32540290188453,&#92;&quot;Close&#92;&quot;:133.38697814941406,&#92;&quot;Volume&#92;&quot;:63261400,&#92;&quot;Dividends&#92;&quot;:0.0,&#92;&quot;Stock Splits&#92;&quot;:0.0}]&quot;' data-total-rows='6013' data-total-columns='8' data-max-columns='50' data-banner-text='&quot;&quot;' data-pagination='true' data-page-size='10' data-field-types='[[&quot;Date&quot;,[&quot;datetime&quot;,&quot;datetime[ms]&quot;]],[&quot;Open&quot;,[&quot;number&quot;,&quot;f64&quot;]],[&quot;High&quot;,[&quot;number&quot;,&quot;f64&quot;]],[&quot;Low&quot;,[&quot;number&quot;,&quot;f64&quot;]],[&quot;Close&quot;,[&quot;number&quot;,&quot;f64&quot;]],[&quot;Volume&quot;,[&quot;integer&quot;,&quot;i64&quot;]],[&quot;Dividends&quot;,[&quot;number&quot;,&quot;f64&quot;]],[&quot;Stock Splits&quot;,[&quot;number&quot;,&quot;f64&quot;]]]' data-show-filters='true' data-show-download='true' data-show-search='true' data-show-column-summaries='true' data-show-data-types='true' data-show-page-size-selector='true' data-show-column-explorer='true' data-show-chart-builder='true' data-row-headers='[]' data-hidden-columns='[]' data-has-stable-row-id='false' data-lazy='false' data-preload='false'></marimo-table></marimo-ui-element>"
+          }
+        }
+      ],
+      "console": []
+    }
+  ]
+}
