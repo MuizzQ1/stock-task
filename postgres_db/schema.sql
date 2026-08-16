@@ -13,10 +13,8 @@ CREATE TABLE stocks (
 
 CREATE TABLE observation (
     run_id SERIAL PRIMARY KEY,
-    stock_code TEXT NOT NULL,
-    interval_time TEXT NOT NULL,
     rows_upserted INT,
     error TEXT,
-    run_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    run_at TIMESTAMP NOT NULL DEFAULT now(),
     status TEXT NOT NULL
 );

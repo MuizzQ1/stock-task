@@ -6,14 +6,14 @@ app = marimo.App(width="medium")
 
 @app.cell
 def _():
-    from datetime import date, timedelta
+    from datetime import date, timedelta, datetime, timezone
 
     import marimo as mo
     import polars as pl
     import yfinance as yf
     from dateutil.relativedelta import relativedelta
 
-    return date, mo, pl, relativedelta, timedelta, yf
+    return date, datetime, mo, pl, relativedelta, timedelta, timezone, yf
 
 
 @app.cell
@@ -98,7 +98,7 @@ def _(mo):
     mo.md(r"""
     # TODO:
 
-    - Pydantic Schema validation
+    - Pydantic Schema validation [DONE]
     - Logging
     - Docker container
 
@@ -108,6 +108,7 @@ def _(mo):
     - pyscopg dependency (binary vs non binary)
     - Creating AAPL package and pulling code in sibling directories -> toml backend code
     - Store redundnat data vs spreed of data return to user
+    - One bad str instead of int in polars df will cause whole polars schema for a col to become invalid -> makes pydantic validation all rows return error for one bad row.
     """)
     return
 
@@ -122,7 +123,7 @@ def _(mo):
 
 @app.cell
 def _():
-    from AAPL_stock import StockIngestion
+    from aapl_stock import StockIngestion
 
     return (StockIngestion,)
 
@@ -153,14 +154,14 @@ def _():
     from dotenv import load_dotenv
     import os
     load_dotenv() 
-    return (os,)
+    return
 
 
 @app.cell
 def _():
     import psycopg
 
-    return (psycopg,)
+    return
 
 
 @app.cell
@@ -179,7 +180,7 @@ def _(df_stocks):
             r["volume"],
             )
         rows.append(r_tuple)
-    return (rows,)
+    return
 
 
 @app.cell
@@ -198,30 +199,162 @@ def _():
             ingested_at = now();
 
     """
-    return (SQL_upload,)
-
-
-@app.cell
-def _(SQL_upload, os, psycopg, rows):
-    connection = psycopg.connect(
-                host=os.getenv("DB_HOST"),
-                dbname=os.getenv("DB_NAME"),
-                user=os.getenv("DB_USER"),
-                password=os.getenv("DB_PASSWORD")
-            )
-
-    with connection as conn:
-
-        # Open a cursor to perform database operations
-        with conn.cursor() as cur:
-
-            cur.executemany(SQL_upload, rows)
-            conn.commit()
     return
 
 
 @app.cell
 def _():
+    # connection = psycopg.connect(
+    #             host=os.getenv("DB_HOST"),
+    #             dbname=os.getenv("DB_NAME"),
+    #             user=os.getenv("DB_USER"),
+    #             password=os.getenv("DB_PASSWORD")
+    #         )
+    # with connection as conn:
+
+    #     # Open a cursor to perform database operations
+    #     with conn.cursor() as cur:
+
+    #         cur.executemany(SQL_upload, rows)
+    #         conn.commit()
+    return
+
+
+@app.cell
+def _(datetime, timezone):
+    datetime.now(timezone.utc).replace(tzinfo=None)
+    return
+
+
+@app.cell
+def _():
+    rows_upserted = 0
+    status = "success"
+    error = None
+    return
+
+
+@app.cell
+def _():
+    # with psycopg.connect(self.conninfo) as conn:
+    #     try:
+    #         with conn.cursor() as cur:
+    #             cur.executemany(self.sql, rows)
+    #             conn.commit()
+    #         rows_upserted = len(rows)
+
+    #     except Exception as e:
+    #         conn.rollback() # Rollback connection to previous connection 
+    #         status = "failed"
+    #         error = f"{type(e).__name__}: {e}"
+
+    #     with conn.cursor() as cur:
+    #         cur.execute(
+    #             self.observation_sql,
+    #             (rows_upserted, error, status),
+    #         )
+    #         conn.commit()
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    # Pydantic Assertion
+    """)
+    return
+
+
+@app.cell
+def _():
+    from aapl_stock import StockData
+    from pydantic import ValidationError
+
+    return
+
+
+@app.cell
+def _(df_stocks):
+    rows_new = []
+
+    # Iterate over each row in polars df as a dict
+    for _r in df_stocks.iter_rows(named=True):
+
+        rows_new.append(_r)
+    return (rows_new,)
+
+
+@app.cell
+def _(rows_new):
+    o = rows_new[0]
+    o['stock_low'] = None
+    o['volume'] = '50'
+    o
+    return (o,)
+
+
+@app.cell
+def _(o, rows_new):
+    test_rows = [
+        o,rows_new[1], rows_new[2]
+    ]
+    return (test_rows,)
+
+
+@app.cell
+def _(pl, test_rows):
+    test_df = pl.DataFrame(test_rows)
+    return (test_df,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    ## Test validation
+    """)
+    return
+
+
+@app.cell
+def _():
+    from aapl_stock import validate_stock_data
+
+    return (validate_stock_data,)
+
+
+@app.cell
+def _(test_df, validate_stock_data):
+    v_rows = validate_stock_data(test_df.to_dicts())
+    return (v_rows,)
+
+
+@app.cell
+def _(test_rows):
+    test_rows
+    return
+
+
+@app.cell
+def _(v_rows):
+    v_rows
+    return
+
+
+@app.cell
+def _(test_df):
+    from aapl_stock import postgress_ingestion
+    db_ingest = postgress_ingestion()
+    db_ingest.refresh(df=test_df)
+    return (postgress_ingestion,)
+
+
+@app.cell
+def _(StockIngestion, postgress_ingestion):
+    _st = StockIngestion()
+    _df_stocks = _st.stock_data_refresh()
+
+    _db_ingest = postgress_ingestion()
+    _db_ingest.refresh(df=_df_stocks)
     return
 
 
