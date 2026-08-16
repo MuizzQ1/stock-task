@@ -1,13 +1,13 @@
 CREATE TABLE stocks (
     stock_code TEXT NOT NULL,
     interval_time TEXT NOT NULL,
-    ts TIMESTAMPTZ NOT NULL,
+    ts TIMESTAMP NOT NULL,
     stock_open NUMERIC,
     stock_high NUMERIC,
     stock_low NUMERIC,
     stock_close NUMERIC,
     volume BIGINT,
-    ingested_at TIMESTAMPTZ NOT NULL DEFAULT now(),
+    ingested_at TIMESTAMP NOT NULL DEFAULT now(),
     PRIMARY KEY (stock_code, interval_time, ts)
 );
 

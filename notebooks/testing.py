@@ -76,12 +76,13 @@ def _(aapl, date, dt_conv, pl, relativedelta, timedelta):
 @app.cell
 def _(aapl_df_all):
     aapl_df_all
+    return
 
 
 @app.cell
 def _(mo):
     _df = mo.sql(
-        """
+        f"""
         -- SELECT * 
         -- FROM aapl_df_1m_cln
         -- WHERE Datetime >= TIMESTAMP '2026-08-13 00:00:00' AND
@@ -89,6 +90,7 @@ def _(mo):
         -- ORDER BY Datetime ASC
         """
     )
+    return
 
 
 @app.cell(hide_code=True)
@@ -96,14 +98,18 @@ def _(mo):
     mo.md(r"""
     # TODO:
 
-    - Extract data sequentially using current datetime
-    - Package into a rerun python class/method
-    - Remove overlapping data (should be solved by sequential step)
+    - Pydantic Schema validation
+    - Logging
+    - Docker container
 
     # Good to share:
     - Dividend/split adjustment, error rates with opening & closing times, api data is only up until day before
     - Connectivity security
+    - pyscopg dependency (binary vs non binary)
+    - Creating AAPL package and pulling code in sibling directories -> toml backend code
+    - Store redundnat data vs spreed of data return to user
     """)
+    return
 
 
 @app.cell(hide_code=True)
@@ -111,6 +117,7 @@ def _(mo):
     mo.md(r"""
     # Test Py Script
     """)
+    return
 
 
 @app.cell
@@ -128,7 +135,94 @@ def _(StockIngestion):
 
 @app.cell
 def _(st):
-    st.stock_data_refresh()
+    df_stocks = st.stock_data_refresh()
+    df_stocks
+    return (df_stocks,)
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    # Postgres DB connection
+    """)
+    return
+
+
+@app.cell
+def _():
+    from dotenv import load_dotenv
+    import os
+    load_dotenv() 
+    return (os,)
+
+
+@app.cell
+def _():
+    import psycopg
+
+    return (psycopg,)
+
+
+@app.cell
+def _(df_stocks):
+    rows = []
+    # Itertae over each row as a dict
+    for r in df_stocks.iter_rows(named=True):
+        r_tuple = (    
+            r["stock_code"],
+            r["interval_time"],
+            r["ts"],
+            r["stock_open"],
+            r["stock_high"],
+            r["stock_low"],
+            r["stock_close"],
+            r["volume"],
+            )
+        rows.append(r_tuple)
+    return (rows,)
+
+
+@app.cell
+def _():
+    SQL_upload = """
+            INSERT INTO stocks
+            (stock_code, interval_time, ts, stock_open, stock_high, stock_low, stock_close, volume)
+        VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+        ON CONFLICT (stock_code, interval_time, ts)
+        DO UPDATE SET
+            stock_open  = EXCLUDED.stock_open,
+            stock_high  = EXCLUDED.stock_high,
+            stock_low   = EXCLUDED.stock_low,
+            stock_close = EXCLUDED.stock_close,
+            volume      = EXCLUDED.volume,
+            ingested_at = now();
+
+    """
+    return (SQL_upload,)
+
+
+@app.cell
+def _(SQL_upload, os, psycopg, rows):
+    connection = psycopg.connect(
+                host=os.getenv("DB_HOST"),
+                dbname=os.getenv("DB_NAME"),
+                user=os.getenv("DB_USER"),
+                password=os.getenv("DB_PASSWORD")
+            )
+
+    with connection as conn:
+
+        # Open a cursor to perform database operations
+        with conn.cursor() as cur:
+
+            cur.executemany(SQL_upload, rows)
+            conn.commit()
+    return
+
+
+@app.cell
+def _():
+    return
 
 
 if __name__ == "__main__":

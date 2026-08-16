@@ -5,7 +5,7 @@ import polars as pl
 import yfinance as yf
 from dateutil.relativedelta import relativedelta
 
-from .helper import dt_conv
+from .helper import col_processing, dt_conv
 
 
 class StockIngestion:
@@ -66,8 +66,9 @@ class StockIngestion:
         ]
 
         tables_cln = []
-        for t, c, i in tables:
-            _t = dt_conv(t, c, i)
+        for table, date_col, interval in tables:
+            _t = dt_conv(table, date_col)
+            _t = col_processing(_t, interval)
             tables_cln.append(_t)
 
         aapl_df_all = pl.concat(tables_cln)
