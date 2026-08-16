@@ -99,8 +99,13 @@ def _(mo):
     # TODO:
 
     - Pydantic Schema validation [DONE]
-    - Logging
+    - Logging [DONE] - CAVEAT: Logging error rows somewhere on failure rows
     - Docker container
+
+    TESTS:
+    - Error rows (AI automation)
+    - Create new tables for testing
+    - Dupicate unique key data
 
     # Good to share:
     - Dividend/split adjustment, error rates with opening & closing times, api data is only up until day before

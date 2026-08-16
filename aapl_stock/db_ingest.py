@@ -1,9 +1,12 @@
+import logging
 import os
 
 import psycopg
 from dotenv import load_dotenv
 
 from .validation import validate_stock_data
+
+logger = logging.getLogger(__name__)
 
 
 class postgress_ingestion:
@@ -39,9 +42,16 @@ class postgress_ingestion:
     def refresh(self, df):
 
         # Connect to the Stocks PostgreSQL database
-        connection = psycopg.connect(
-            host=self.host, dbname=self.dbname, user=self.user, password=self.password
-        )
+        try:
+            connection = psycopg.connect(
+                host=self.host,
+                dbname=self.dbname,
+                user=self.user,
+                password=self.password,
+            )
+        except psycopg.Error as e:
+            logger.error(f"Error connecting to the database: {e}")
+            return
 
         rows_upserted = 0
         status = "success"
@@ -59,12 +69,16 @@ class postgress_ingestion:
                     # open a cursor to perform database operations
                     cur.executemany(self.stocks_sql, valid_rows)
                     conn.commit()
+                    logger.info("Data upserted successfully")
+
                 rows_upserted = len(valid_rows)
+                logger.info(f"Rows upserted: {rows_upserted}")
 
             except psycopg.Error as e:
                 conn.rollback()  # Keep connection healthy
                 status = "failed"
                 error = f"{type(e).__name__}: {e}"  # Capture error message
+                logger.error(f"Error upserting data, {error}")
 
             # Log postgres uplaod into observation table
             with conn.cursor() as cur:

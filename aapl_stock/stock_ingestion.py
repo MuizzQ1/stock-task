@@ -1,3 +1,4 @@
+import logging
 from datetime import datetime, timedelta
 from zoneinfo import ZoneInfo
 
@@ -7,17 +8,19 @@ from dateutil.relativedelta import relativedelta
 
 from .helper import col_processing, dt_conv
 
+logger = logging.getLogger(__name__)
+
 
 class StockIngestion:
     """
     Pull Stock Data from Yahoo Finance API and return a Polars DataFrame with the following columns:
-    - Date: The date of the stock data
-    - Open: The opening price of the stock
-    - High: The highest price of the stock
-    - Low: The lowest price of the stock
-    - Close: The closing price of the stock
-    - Volume: The volume of the stock traded
-    - Interval: The interval of the stock data (1d, 5m, 1m)
+    - date: The date of the stock data
+    - stock_open: The opening price of the stock
+    - stock_high: The highest price of the stock
+    - stock_low: The lowest price of the stock
+    - stock_close: The closing price of the stock
+    - stock_volume: The volume of the stock traded
+    - interval: The interval of the stock data (1d, 5m, 1m)
     """
 
     def __init__(self, ticker="AAPL"):
@@ -42,6 +45,10 @@ class StockIngestion:
         aapl_df_day = pl.DataFrame(
             self.aapl.history(start=start, end=end, interval="1d").reset_index()
         )
+        logger.info("Retrieved daily stock data")
+        logger.info("Daily data range:")
+        logger.info(f"Start: {aapl_df_day['Date'].min()}")
+        logger.info(f"End: {aapl_df_day['Date'].max()}")
 
         # Define the date range for the 5 minute intervals
         last_5m = aapl_df_day["Date"].max() + relativedelta(days=1)
@@ -51,6 +58,11 @@ class StockIngestion:
             self.aapl.history(start=last_5m, end=end_5m, interval="5m").reset_index()
         )
 
+        logger.info("Retrieved 5-minute stock data")
+        logger.info("5-minute data range:")
+        logger.info(f"Start: {aapl_df_5m['Datetime'].min()}")
+        logger.info(f"End: {aapl_df_5m['Datetime'].max()}")
+
         # Define the date range for the last 1 minute intervals
         last_1m = aapl_df_5m["Datetime"].max() + timedelta(hours=1)
         end_1m = last_1m + timedelta(days=7)
@@ -58,6 +70,11 @@ class StockIngestion:
         aapl_df_1m = pl.DataFrame(
             self.aapl.history(start=last_1m, end=end_1m, interval="1m").reset_index()
         )
+
+        logger.info("Retrieved 1-minute stock data")
+        logger.info("1-minute data range:")
+        logger.info(f"Start: {aapl_df_1m['Datetime'].min()}")
+        logger.info(f"End: {aapl_df_1m['Datetime'].max()}")
 
         tables = [
             (aapl_df_day, "Date", "1d"),
