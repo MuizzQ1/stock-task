@@ -1,11 +1,26 @@
 import os
+from datetime import datetime
 
 import psycopg
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from psycopg.rows import dict_row
+from pydantic import BaseModel
 
 load_dotenv()
+
+
+class StockSummary(BaseModel):
+    stock_code: str
+    interval_time: str
+    ticker_points: int
+    first_ts: datetime
+    last_ts: datetime
+    days_spanned: int
+    min_close: float
+    max_close: float
+    avg_close: float
+
 
 app = FastAPI(
     title="Stock Data API",
@@ -29,7 +44,7 @@ summary_sql = """
 """
 
 
-@app.get("/summary")
+@app.get("/summary", response_model=list[StockSummary])
 def get_summary():
     try:
         connection = psycopg.connect(
