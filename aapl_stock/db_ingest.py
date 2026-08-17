@@ -60,7 +60,7 @@ class postgress_ingestion:
         rows = df.to_dicts()
 
         # Validate the data using the Pydantic model
-        valid_rows = validate_stock_data(rows)
+        valid_rows, _ = validate_stock_data(rows)
 
         # Connect to stock DB using defined connectio
         with connection as conn:

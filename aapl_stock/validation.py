@@ -19,11 +19,11 @@ def validate_stock_data(rows):
         except ValidationError as e:
             rejected.append({"row": row, "errors": e.errors()})
 
-    logger.info(
-        f"Validation completed. Valid rows: {len(valid)}, Rejected rows: {len(rejected)}"
-    )
     valid_rows = []
     for row in valid:
         valid_rows.append(tuple(row.model_dump().values()))
 
-    return valid_rows
+    logger.info(
+        f"Pydantic validation completed. Valid rows: {len(valid)}, Rejected rows: {len(rejected)}"
+    )
+    return valid_rows, rejected
