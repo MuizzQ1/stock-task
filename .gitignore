@@ -5,6 +5,14 @@ build/
 dist/
 wheels/
 *.egg-info
+*.py[cod]
+.ruff_cache/
+__marimo__/
 
 # Virtual environments
 .venv
+
+# Pre commit
+.pre-commit-config.yaml
+.sqlfluff
+.env
