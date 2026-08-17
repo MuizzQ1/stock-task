@@ -116,6 +116,8 @@ def _(mo):
     - Store redundnat data vs spreed of data return to user
     - One bad str instead of int in polars df will cause whole polars schema for a col to become invalid -> makes pydantic validation all rows return error for one bad row.
     - Extra tests (high being higher than low assertion)
+    - API memory
+    - Connection per request
     """)
     return
 
@@ -161,14 +163,14 @@ def _():
     from dotenv import load_dotenv
     import os
     load_dotenv() 
-    return
+    return (os,)
 
 
 @app.cell
 def _():
     import psycopg
 
-    return
+    return (psycopg,)
 
 
 @app.cell
@@ -434,6 +436,130 @@ def _(make_row, validate_stock_data):
         assert len(valid) == 2
         assert len(rejected) == 1
 
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    # SQL testing
+    """)
+    return
+
+
+@app.cell
+def _():
+    import os
+    import sqlalchemy
+
+    url = sqlalchemy.URL.create(
+        "postgresql+psycopg",
+        username=os.environ["DB_USER"],
+        password=os.environ["DB_PASSWORD"],
+        host=os.environ["DB_HOST"],
+        port=5432,
+        database=os.environ["DB_NAME"],
+    )
+    engine = sqlalchemy.create_engine(url)
+    return engine, os
+
+
+@app.cell
+def _(engine, mo, stocks):
+    _df = mo.sql(
+        f"""
+        WITH dates as (
+        SELECT 
+            *,
+            ROW_NUMBER() OVER(PARTITION BY DATE(ts) ORDER BY ts DESC) AS rn
+        FROM STOCKS
+        WHERE ts BETWEEN DATE('2026-08-01') AND DATE('2026-08-15') 
+        ORDER BY ts
+        )
+
+        SELECT *
+        FROM dates
+        -- where rn = 1
+        """,
+        engine=engine
+    )
+    return
+
+
+@app.cell
+def _(engine, mo, stocks):
+    _df = mo.sql(
+        f"""
+        SELECT
+            stock_code,
+            interval_time,
+            count(*) AS ticker_points,
+            min(ts) AS first_ts,
+            max(ts) AS last_ts,
+            max(ts)::date - min(ts)::date AS days_spanned,
+            round(min(stock_close), 2) AS min_close,
+            round(max(stock_close), 2) AS max_close,
+            round(avg(stock_close), 2) AS avg_close
+        FROM stocks
+        GROUP BY stock_code, interval_time
+        ORDER BY max(ts) DESC
+        """,
+        engine=engine
+    )
+    return
+
+
+@app.cell(hide_code=True)
+def _(mo):
+    mo.md(r"""
+    # Fetch data test
+    """)
+    return
+
+
+@app.cell
+def _():
+    summary_sql = """
+    SELECT
+        stock_code,
+        interval_time,
+        count(*) AS ticker_points,
+        min(ts) AS first_ts,
+        max(ts) AS last_ts,
+        max(ts)::date - min(ts)::date AS days_spanned,
+        round(min(stock_close), 2) AS min_close,
+        round(max(stock_close), 2) AS max_close,
+        round(avg(stock_close), 2) AS avg_close
+    FROM stocks
+    GROUP BY stock_code, interval_time
+    ORDER BY max(ts) DESC
+    """
+    return (summary_sql,)
+
+
+@app.cell
+def _(os, psycopg, summary_sql):
+    from psycopg.rows import dict_row
+
+    connection = psycopg.connect(
+
+    host=os.getenv("DB_HOST"),
+    dbname=os.getenv("DB_NAME"),
+    user=os.getenv("DB_USER"),
+    password=os.getenv("DB_PASSWORD"),
+    )
+
+    with connection as conn:
+        with conn.cursor(row_factory=dict_row) as cur:
+            cur.execute(summary_sql)
+            rows_n = cur.fetchall()
+            conn.commit()
+    return (rows_n,)
+
+
+@app.cell
+def _(rows_n):
+    rows_n
     return
 
 
