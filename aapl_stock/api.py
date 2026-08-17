@@ -1,8 +1,11 @@
 import os
 
 import psycopg
+from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from psycopg.rows import dict_row
+
+load_dotenv()
 
 app = FastAPI(
     title="Stock Data API",
@@ -35,8 +38,8 @@ def get_summary():
             user=os.getenv("DB_USER"),
             password=os.getenv("DB_PASSWORD"),
         )
-    except psycopg.Error:
-        raise HTTPException(404, "No DB connection found")
+    except psycopg.Error as e:
+        raise HTTPException(500, f"DB connection failed: {type(e).__name__}: {e}")
 
     with connection as conn:
         try:
