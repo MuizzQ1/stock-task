@@ -1,6 +1,7 @@
 import logging
 
-from aapl_stock import StockIngestion, postgress_ingestion
+from .db_ingest import postgress_ingestion
+from .stock_ingestion import StockIngestion
 
 logger = logging.getLogger(__name__)
 

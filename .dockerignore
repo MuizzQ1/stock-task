@@ -1,0 +1,14 @@
+.venv
+.git
+.gitignore
+.env
+notebooks/
+tests/
+postgres_db/
+__pycache__/
+*.pyc
+.pytest_cache/
+.ruff_cache/
+.marimo/
+.pre-commit-config.yaml
+.sqlfluff
