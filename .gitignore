@@ -12,7 +12,5 @@ __marimo__/
 # Virtual environments
 .venv
 
-# Pre commit
-.pre-commit-config.yaml
-.sqlfluff
+# env files
 .env

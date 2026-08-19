@@ -36,41 +36,74 @@ def _(pl):
 
         return df
 
-    return (dt_conv,)
+    return
 
 
 @app.cell
-def _(aapl, date, dt_conv, pl, relativedelta, timedelta):
+def _(aapl, date, pl, relativedelta, timedelta):
     end = date.today() - timedelta(days=59)
     start = end - relativedelta(years=5)
+    print(end)
 
     aapl_df_day = pl.DataFrame(
         aapl.history(start=start, end=end, interval="1d").reset_index()
     )
 
-    last_5m = aapl_df_day["Date"].max() + relativedelta(days=1)
+    aapl_df_day['Date'].max()
+
+    last_5m = end + relativedelta(days=1)
+    print(last_5m)
     end_5m = last_5m + relativedelta(days=52)
+    print(end_5m)
 
     aapl_df_5m = pl.DataFrame(
         aapl.history(start=last_5m, end=end_5m, interval="5m").reset_index()
     )
 
-    last_1m = aapl_df_5m["Datetime"].max() + timedelta(hours=1)
-    end_1m = last_1m + timedelta(days=7)
+    last_1m = end_5m + timedelta(days=1)
+    end_1m = last_1m + timedelta(days=6)
+    print(last_1m)
+    print(end_1m)
 
     aapl_df_1m = pl.DataFrame(
         aapl.history(start=last_1m, end=end_1m, interval="1m").reset_index()
     )
 
-    tables = [(aapl_df_day, "Date"), (aapl_df_5m, "Datetime"), (aapl_df_1m, "Datetime")]
+    # tables = [(aapl_df_day, "Date"), (aapl_df_5m, "Datetime"), (aapl_df_1m, "Datetime")]
 
-    tables_cln = []
-    for t, c in tables:
-        _t = dt_conv(t, c)
-        tables_cln.append(_t)
+    # tables_cln = []
+    # for t, c in tables:
+    #     _t = dt_conv(t, c)
+    #     tables_cln.append(_t)
 
-    aapl_df_all = pl.concat(tables_cln)
-    return (aapl_df_all,)
+    # aapl_df_all = pl.concat(tables_cln)
+    aapl_df_1m
+    return
+
+
+@app.cell
+def _(aapl):
+    aapl.history(period="8d", interval="1m")
+    return
+
+
+@app.cell
+def _(aapl, date, pl, relativedelta):
+    _end_1m_ = date.today()
+    _start_1m = _end_1m_ - relativedelta(days=8)
+
+    _end_5m_ = _start_1m
+    _start_5m = _end_5m_ - relativedelta(days=51)
+
+    _end_1d = _start_5m
+    _start_1d = _end_1d - relativedelta(years=5)
+
+    _df= pl.DataFrame(
+        aapl.history(start=_start_5m, end=_end_5m_, interval="5m").reset_index()
+    )
+
+    _df
+    return
 
 
 @app.cell
@@ -118,6 +151,7 @@ def _(mo):
     - Extra tests (high being higher than low assertion)
     - API memory
     - Connection per request
+    - Linting catching errors: date.today() -> prod issues
     """)
     return
 
@@ -156,14 +190,6 @@ def _(mo):
     # Postgres DB connection
     """)
     return
-
-
-@app.cell
-def _():
-    from dotenv import load_dotenv
-    import os
-    load_dotenv() 
-    return (os,)
 
 
 @app.cell
@@ -449,7 +475,9 @@ def _(mo):
 
 @app.cell
 def _():
+    from dotenv import load_dotenv
     import os
+    load_dotenv() 
     import sqlalchemy
 
     url = sqlalchemy.URL.create(

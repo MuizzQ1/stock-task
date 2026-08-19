@@ -1,0 +1,27 @@
+repos:
+  - repo: https://github.com/astral-sh/ruff-pre-commit
+    rev: v0.16.3 
+    hooks:
+      - id: ruff
+        args: [--fix]
+      - id: ruff-format
+
+  - repo: https://github.com/sqlfluff/sqlfluff
+    rev: 4.3.0  
+    hooks:
+      - id: sqlfluff-lint
+      - id: sqlfluff-fix
+      
+  - repo: https://github.com/gitleaks/gitleaks
+    rev: v8.30.0
+    hooks:
+      - id: gitleaks
+
+  - repo: local
+    hooks:
+      - id: pytest-unit
+        name: unit tests
+        entry: uv run pytest
+        language: system
+        types: [python]
+        pass_filenames: false
