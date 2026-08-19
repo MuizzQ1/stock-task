@@ -1,14 +1,13 @@
 import logging
 import os
-from datetime import datetime
 
 import psycopg
 from dotenv import load_dotenv
 from fastapi import FastAPI, HTTPException
 from psycopg.rows import dict_row
-from pydantic import BaseModel
 
-from aapl_stock import run_pipeline
+from .models import StockSummary
+from .pipeline import run_pipeline
 
 logger = logging.getLogger(__name__)
 
@@ -20,19 +19,6 @@ logging.basicConfig(
 )
 
 load_dotenv()
-
-
-class StockSummary(BaseModel):
-    stock_code: str
-    interval_time: str
-    ticker_points: int
-    first_ts: datetime
-    last_ts: datetime
-    days_spanned: int
-    min_close: float
-    max_close: float
-    avg_close: float
-
 
 app = FastAPI(
     title="Stock Data API",
@@ -69,8 +55,13 @@ def get_summary():
             user=os.getenv("DB_USER"),
             password=os.getenv("DB_PASSWORD"),
         )
+
+        logger.info("DB connection established successfully")
+
     except psycopg.Error as e:
-        raise HTTPException(500, f"DB connection failed: {type(e).__name__}: {e}")
+        logger.error(f"DB connection failed: {type(e).__name__}: {e}")
+
+        raise HTTPException(500, "DB connection failed")
 
     with connection as conn:
         try:
@@ -80,8 +71,10 @@ def get_summary():
                 rows = cur.fetchall()
                 conn.commit()
 
-        except psycopg.Error:
-            # error = f"{type(e).__name__}: {e}"  # Capture error message
+        except psycopg.Error as e:
+            logger.error(
+                f"Error occurred while fetching summary data: {type(e).__name__}: {e}"
+            )
             raise HTTPException(404, "no stock data found")
 
     return rows

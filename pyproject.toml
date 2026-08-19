@@ -34,9 +34,7 @@ exclude = ["notebooks/testing.py"]
 "aapl_stock/__init__.py" = ["N999"]
 
 [dependency-groups]
-dev = [
-    "pytest>=8.0",
-]
+dev = ["pytest>=8.0"]
 
 [tool.pytest.ini_options]
 testpaths = ["tests"]

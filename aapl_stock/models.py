@@ -22,3 +22,19 @@ class StockData(BaseModel):
     stock_low: Annotated[float, Field(gt=0)]
     stock_close: Annotated[float, Field(gt=0)]
     volume: Annotated[int, Field(ge=0)]
+
+
+class StockSummary(BaseModel):
+    """
+    Pydantic Base Model for stock summary data.
+    """
+
+    stock_code: str
+    interval_time: str
+    ticker_points: int
+    first_ts: datetime
+    last_ts: datetime
+    days_spanned: int
+    min_close: float
+    max_close: float
+    avg_close: float
