@@ -12,3 +12,5 @@ __pycache__/
 .marimo/
 .pre-commit-config.yaml
 .sqlfluff
+images/
+README.md

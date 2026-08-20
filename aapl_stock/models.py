@@ -31,7 +31,7 @@ class StockSummary(BaseModel):
 
     stock_code: str
     interval_time: str
-    ticker_points: int
+    data_points: int
     first_ts: datetime
     last_ts: datetime
     days_spanned: int
