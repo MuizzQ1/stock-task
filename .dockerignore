@@ -13,4 +13,3 @@ __pycache__/
 .pre-commit-config.yaml
 .sqlfluff
 images/
-README.md
