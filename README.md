@@ -38,9 +38,7 @@ Data is stored in three intervals of 1 day, 5 minutes and 1 minute. For every re
 
 ## Setup
 
-### Option A: FastAPI via Cloud Run
-
-#### Connecting to the Google Cloud SDK
+### Install Google Cloud SDK & Google Cloud Proxy
 
 *Note*: Assumes the user has service account permission to use the gcloud proxy and connect to the Cloud Run instance.
 
@@ -50,6 +48,10 @@ Install the Google Cloud SDK (Debian/Ubuntu) & authenticate: https://docs.cloud.
 gcloud init
 gcloud config set project [project-id]
 ```
+
+Install the Google cloud Proxy from the  *Download the Cloud SQL Auth Proxy* section: https://docs.cloud.google.com/sql/docs/mysql/connect-auth-proxy
+
+### Option A: FastAPI via Cloud Run
 
 #### Set up the connection via Cloud Proxy
 
