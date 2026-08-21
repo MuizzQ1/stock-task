@@ -36,11 +36,11 @@ def _(pl):
 
         return df
 
-    return
+    return (dt_conv,)
 
 
 @app.cell
-def _(aapl, date, pl, relativedelta, timedelta):
+def _(aapl, date, dt_conv, pl, relativedelta, timedelta):
     end = date.today() - timedelta(days=59)
     start = end - relativedelta(years=5)
     print(end)
@@ -69,16 +69,22 @@ def _(aapl, date, pl, relativedelta, timedelta):
         aapl.history(start=last_1m, end=end_1m, interval="1m").reset_index()
     )
 
-    # tables = [(aapl_df_day, "Date"), (aapl_df_5m, "Datetime"), (aapl_df_1m, "Datetime")]
+    tables = [(aapl_df_day, "Date"), (aapl_df_5m, "Datetime"), (aapl_df_1m, "Datetime")]
 
-    # tables_cln = []
-    # for t, c in tables:
-    #     _t = dt_conv(t, c)
-    #     tables_cln.append(_t)
+    tables_cln = []
+    for t, c in tables:
+        _t = dt_conv(t, c)
+        tables_cln.append(_t)
 
-    # aapl_df_all = pl.concat(tables_cln)
-    aapl_df_1m
-    return
+    aapl_df_all = pl.concat(tables_cln)
+    # aapl_df_1m
+
+    aapl_df_all = aapl_df_all.with_columns(
+        pl.col('Date').dt.date().alias('date_short')
+    )
+
+    aapl_df_all
+    return (aapl_df_all,)
 
 
 @app.cell

@@ -136,14 +136,14 @@ http://127.0.0.1:8080/summary
 POST HTTP method. Extracts data from the yfinance API and upserts data into the Cloud SQL Postgres instance based on the stock_code, interval and timestamp of the stock price.
 
 ```
-http://127.0.0.1:8080/ingest
+curl -X POST http://127.0.0.1:8080/ingest 
 ```
 
 ---
 
 ## Project Architecture
 
-The project is built upon: **extraction**, **transformation**, **validation**, **loading into a database**, **serving**. Each stage is a small module which can be tested, validated and changed.
+The project is built upon: **extraction**, **transformation**, **validation**, **loading into a database** and **serving**. Each stage is a small module which can be tested, validated and changed.
 
 ### Repository layout
 
@@ -188,7 +188,7 @@ How the repo is built and released onto Google Cloud using Cloud Run.
 - The container either upserts or queries data from Cloud SQL.
 - The API result is returned to the user.
 
-### 1. Stock ingestion (`stock_ingestion.py`)
+### 1. Stock Ingestion (`stock_ingestion.py`)
 
 `StockIngestion` is the extraction layer. Uses a `yfinance` object for AAPL stock and exposes method `stock_data_refresh()`. Returns a Polars DataFrame containing three different granularities of AAPL price history.
 
@@ -203,7 +203,7 @@ Achieved through three extractions and a final concatenation.
 
 Logs processed to ensure no overlapping / redundant data is extracted.
 
-### 2. Shared helpers (`helper.py`)
+### 2. Shared Helpers (`helper.py`)
 
 `helper.py` contains simple helper functions used in some processing files.
 
@@ -215,7 +215,7 @@ Remove timezone from the final output. Standardise date column names.
 
 Add in AAPL stock code column. Standardise column names. Remove redundant columns.
 
-### 3. Schema and validation (`models.py` + `validation.py`)
+### 3. Schema and Validation (`models.py` + `validation.py`)
 
 The schema is **declared** in `models.py` and **validated** in `validation.py`.
 
@@ -237,16 +237,16 @@ Quality Checks:
 
 The per-row approach means one malformed row does not discard an entire ingest dataset.
 
-### 4. Database ingestion (`db_ingest.py`)
+### 4. Database Ingestion (`db_ingest.py`)
 
 `postgress_ingestion` is the load layer. Its `refresh(df)` method:
 
 - Predefine attributes of the upsert SQL, observation layer SQL and DB credentials.
 - Connect to DB using `psycopg`. Error handling for faulty connection.
 - Validate the DataFrame.
-- Allow connection rollback for observation layer data transaction.
+- Allow connection rollback for the observation layer data transaction.
 
-### 5. Database schema (`postgres_db/schema.sql`)
+### 5. Database Schema (`postgres_db/schema.sql`)
 
 Two tables:
 
@@ -279,11 +279,11 @@ CREATE TABLE observation (
 );
 ```
 
-### 6. File design: classes, attributes and methods
+### 6. File Design: classes, attributes and methods
 
 Ingestion files (stock data and DB ingestion) are set up using class methods and attributes.
 
-The practical benefits this buys the rest of the codebase:
+Benefits:
 
 - Credentials are set up in a single instance during class initialisation.
 - Use methods as a sequence of steps in orchestrating ingestion.
@@ -302,7 +302,7 @@ db_ingest = postgress_ingestion()
 db_ingest.refresh(df=df_stocks)
 ```
 
-### 8. Serving layer (`api.py`)
+### 8. Serving Layer (`api.py`)
 
 The serving layer uses **FastAPI**:
 
@@ -346,6 +346,12 @@ Marimo benefits:
 - **SQL and Python in one document** — query the live Cloud SQL instance and
   return DataFrames that the next Python cell can use.
 - **Reactive cells** — re-running a cell updates all instances of named variables, so no stale cells — quick development.
+
+Run the notebook with:
+
+```bash
+uv run marimo edit notebooks/testing.py
+```
 
 ### 10. Testing (`tests/test_validation.py`)
 
