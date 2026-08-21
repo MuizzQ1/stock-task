@@ -33,7 +33,7 @@ summary_sql = """
     SELECT
         stock_code,
         interval_time,
-        count(*) AS ticker_points,
+        count(*) AS data_points,
         min(ts) AS first_ts,
         max(ts) AS last_ts,
         max(ts)::date - min(ts)::date AS days_spanned,

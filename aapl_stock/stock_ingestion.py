@@ -29,10 +29,7 @@ class StockIngestion:
 
     def stock_data_refresh(self):
         """
-        Create polars df which spans:
-            - last 5 years of daily data
-            - last 60 days of 5 minute data
-            - last 7 days of 1 minute data.
+        Create polars df which spans multiple intervals of stock data for the last 5 years.
 
         No overlapping data is pulled.
         Returns data in a single polars df.
