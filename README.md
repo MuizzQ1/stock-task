@@ -38,6 +38,10 @@ Data is stored in three intervals of 1 day, 5 minutes and 1 minute. For every re
 
 ## Setup
 
+### Requirements
+
+**OS:** Linux or macOS (developed on Ubuntu via WSL)
+
 ### Install Google Cloud SDK & Google Cloud Proxy
 
 *Note*: Assumes the user has service account permission to use the gcloud proxy and connect to the Cloud Run instance.
